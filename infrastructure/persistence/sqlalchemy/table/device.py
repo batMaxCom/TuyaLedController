@@ -5,7 +5,7 @@ from infrastructure.persistence.sqlalchemy.table.base import MAPPER_REGISTRY
 
 DEVICE_TABLE = Table(
     "device",
-    MAPPER_REGISTRY,
+    MAPPER_REGISTRY.metadata,
     Column("id", Integer, primary_key=True),
     Column("name", String(255), nullable=False)
 )

@@ -19,7 +19,7 @@ class PostgresConfig:
     def from_env(cls) -> Self:
         """Возвращает настройки PostgreSQL."""
         host = environ.get("POSTGRES_HOST", "localhost")
-        port = int(environ.get("POSTGRES_PORT", "5432"))
+        port = int(environ.get("POSTGRES_PORT", "54328"))
         user = environ.get("POSTGRES_USER", "postgres")
         password = environ.get("POSTGRES_PASSWORD", "postgres")
         db = environ.get("POSTGRES_DATABASE", "postgres")
