@@ -4,6 +4,7 @@ from datetime import datetime
 
 from tuya_connector import TuyaOpenAPI
 
+from infrastructure.tuya_cloud.config import TuyaCloudConfig
 from infrastructure.tuya_cloud.enum import TuyaCloudUriEnum
 
 
@@ -67,10 +68,10 @@ class TuyaCloudManager:
         return self._parse_device_status(
             self.openapi.get(TuyaCloudUriEnum.get_info.value.format(self.device_id))
         )
-
+tuya_settings = TuyaCloudConfig.from_env()
 controller = TuyaCloudManager(
-    access_id=os.getenv("ACCESS_ID"),
-    access_key=os.getenv("ACCESS_KEY"),
+    access_id=tuya_settings.access_id,
+    access_key=tuya_settings.access_key,
     device_id=os.getenv("DEVICE_ID"),
-    endpoint=os.getenv("API_ENDPOINT")
+    endpoint=tuya_settings.api_endpoint
 )
