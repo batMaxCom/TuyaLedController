@@ -1,21 +1,24 @@
+from dishka import make_container
+from dishka.integrations.flask import setup_dishka
 from flask import Flask
 
-from application.operations.query import GetDeviceQuery, GetDeviceQueryHandler
+from infrastructure.di.db import DatabaseProvider, SessionProvider
+from infrastructure.di.mediator import MediatorProvider
+from infrastructure.di.repository.sql_device_repository import RepositoryProvider
 from infrastructure.persistence.sqlalchemy.table.device import map_device_table
 from presentation.web.controllers.device import DEVICE_CONTROLLER
 
-from application.operations.command import AddDeviceCommand, AddDeviceCommandHandler
-from infrastructure.mediatr.mediatr import Mediator
-from infrastructure.mediatr.registy import Registry
-
 app = Flask(__name__)
 
-# CQRS
-registry = Registry()
-registry.add_handler(AddDeviceCommand, AddDeviceCommandHandler)
-registry.add_handler(GetDeviceQuery, GetDeviceQueryHandler)
+container = make_container(
+    DatabaseProvider(),
+    SessionProvider(),
+    RepositoryProvider(),
+    MediatorProvider(),
+)
 
-app.extensions["mediator"] = Mediator(registry)
+setup_dishka(container, app)
+
 
 # Controllers
 app.register_blueprint(DEVICE_CONTROLLER, url_prefix="/api")

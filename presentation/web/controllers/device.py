@@ -1,16 +1,20 @@
-from flask import Blueprint, request, status, current_app
+from dishka.integrations.flask import inject
+from flask import Blueprint, request, status
 
 from application.common.dto.device import DeviceDto
 from application.operations.command import AddDeviceCommand
 from application.operations.query import GetDeviceQuery
+from infrastructure.mediatr.mediatr import Mediator
 from presentation.web.param import DeviceBody
 from presentation.web.schemas.base import SuccessfulResponse
 
 DEVICE_CONTROLLER = Blueprint('device', __name__)
-mediator = current_app.extensions["mediator"]
 
 @DEVICE_CONTROLLER.post('/')
-def create_device() -> SuccessfulResponse[None]:
+@inject
+def create_device(
+        mediator: Mediator,
+) -> SuccessfulResponse[None]:
     body = DeviceBody(**request.get_json())
     command = AddDeviceCommand(
         device_id=body.device_id
@@ -20,6 +24,7 @@ def create_device() -> SuccessfulResponse[None]:
 
 @DEVICE_CONTROLLER.get('/')
 def get_list_device(
+        mediator: Mediator,
 ) -> SuccessfulResponse[list[DeviceDto]]:
     query = GetDeviceQuery()
     result = mediator.send(query)

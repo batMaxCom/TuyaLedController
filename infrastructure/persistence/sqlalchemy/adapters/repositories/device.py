@@ -5,7 +5,7 @@ from domain import Device
 from domain.device.repository import DeviceRepository
 
 
-class SqlTransportRepositoryImpl(DeviceRepository):
+class SqlDeviceRepositoryImpl(DeviceRepository):
 
     def __init__(self, session: Session) -> None:
         self.__session = session
