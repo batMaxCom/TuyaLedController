@@ -1,15 +1,17 @@
 from dataclasses import dataclass
 
+from application.common.handlers import QueryHandler
+from application.common.makers import Query
 from application.port.gateway.device_state_gateway import DeviceStateGateway
 from domain.device.value_objects.device_id import DeviceId
 from domain.device_state.entity import DeviceState
 
 
 @dataclass(frozen=True, slots=True)
-class GetDeviceStateQuery:
+class GetDeviceStateQuery(Query):
     device_id: DeviceId
 
-class GetDeviceStateHandler:
+class GetDeviceStateHandler(QueryHandler):
     def __init__(
             self,
             device_state_gateway: DeviceStateGateway,

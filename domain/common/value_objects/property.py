@@ -3,7 +3,7 @@ from typing import Any
 
 
 @dataclass(frozen=True, slots=True)
-class Command:
+class Property:
 
     property: str
     value: Any
