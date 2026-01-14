@@ -3,10 +3,10 @@ from dishka.integrations.flask import setup_dishka
 from flask import Flask
 
 from infrastructure.di.db import DatabaseProvider, SessionProvider
+from infrastructure.di.handlers import HandlersProvider
 from infrastructure.di.mediator import MediatorProvider
-from infrastructure.di.repository.sql_device_repository import RepositoryProvider
+from infrastructure.di.repository import RepositoryProvider
 from infrastructure.persistence.sqlalchemy.table.device import map_device_table
-from presentation.web.controllers.device import DEVICE_CONTROLLER
 
 app = Flask(__name__)
 
@@ -15,10 +15,12 @@ container = make_container(
     SessionProvider(),
     RepositoryProvider(),
     MediatorProvider(),
+    HandlersProvider(),
 )
 
 setup_dishka(container, app)
 
+from presentation.web.controllers.device import DEVICE_CONTROLLER
 
 # Controllers
 app.register_blueprint(DEVICE_CONTROLLER, url_prefix="/api")

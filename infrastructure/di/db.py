@@ -1,5 +1,7 @@
+from typing import Generator, Iterable
+
 from dishka import Provider, Scope, provide
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Engine
 from sqlalchemy.orm import sessionmaker, Session
 
 from infrastructure.persistence.sqlalchemy.config import PostgresConfig
@@ -8,12 +10,15 @@ class DatabaseProvider(Provider):
     scope = Scope.APP
 
     @provide
-    def engine(self):
+    def engine(self) -> Engine:
         settings = PostgresConfig.from_env()
-        return create_engine(settings.uri, pool_pre_ping=True)
+        return create_engine(
+            settings.uri,
+            pool_pre_ping=True,
+        )
 
     @provide
-    def session_factory(self, engine) -> sessionmaker:
+    def session_maker(self, engine: Engine) -> sessionmaker[Session]:
         return sessionmaker(
             bind=engine,
             autoflush=False,
@@ -24,13 +29,6 @@ class SessionProvider(Provider):
     scope = Scope.REQUEST
 
     @provide
-    def session(self, session_factory) -> Session:
-        session = session_factory()
-        try:
+    def session(self, session_maker: sessionmaker[Session]) -> Iterable[Session]:
+        with session_maker() as session:
             yield session
-            session.commit()
-        except Exception:
-            session.rollback()
-            raise
-        finally:
-            session.close()
