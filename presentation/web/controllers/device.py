@@ -1,5 +1,3 @@
-from dataclasses import asdict
-
 from dishka import FromDishka
 from dishka.integrations.flask import inject
 from flask import Blueprint, request, jsonify
@@ -11,7 +9,6 @@ from application.operations.query import GetDeviceQuery
 from domain.device.value_objects.device_id import DeviceId
 from infrastructure.mediatr.mediatr import Mediator
 from presentation.web.param import DeviceBody
-from presentation.web.schemas.base import SuccessfulResponse
 
 DEVICE_CONTROLLER = Blueprint('device', __name__)
 
@@ -25,7 +22,7 @@ def create_device(
         device_id=DeviceId(body.device_id)
     )
     mediator.send(command)
-    return jsonify(None), status.CREATED.value
+    return None, status.CREATED.value
 
 @DEVICE_CONTROLLER.get('/')
 @inject

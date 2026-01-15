@@ -11,7 +11,7 @@ from domain.device_property.entity import DeviceProperty
 class GetDevicePropertyQuery(Query):
     device_id: DeviceId
 
-class GetDevicePropertyHandler(QueryHandler):
+class GetDevicePropertyQueryHandler(QueryHandler):
     def __init__(
             self,
             device_property_gateway: DevicePropertyGateway,

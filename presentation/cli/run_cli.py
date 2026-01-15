@@ -1,9 +1,9 @@
 import json
 import logging
-import os
+from os import environ
+
 from datetime import datetime
 
-from dotenv import load_dotenv
 from tuya_connector import TuyaOpenAPI, TUYA_LOGGER
 
 
@@ -182,12 +182,11 @@ class TuyaLEDController:
                 print("❌ Неверный выбор")
 
 if __name__ == "__main__":
-    load_dotenv()
 
     controller = TuyaLEDController(
-        access_id=os.getenv("ACCESS_ID"),
-        access_key=os.getenv("ACCESS_KEY"),
-        device_id=os.getenv("DEVICE_ID"),
-        endpoint=os.getenv("API_ENDPOINT")
+        access_id=environ.get("ACCESS_ID"),
+        access_key=environ.get("ACCESS_KEY"),
+        device_id=environ.get("DEVICE_ID"),
+        endpoint=environ.get("API_ENDPOINT")
     )
     controller.run_cli()

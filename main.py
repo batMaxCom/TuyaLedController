@@ -8,6 +8,7 @@ from infrastructure.di.handlers import HandlersProvider
 from infrastructure.di.mediator import MediatorProvider
 from infrastructure.di.repository import RepositoryProvider
 from infrastructure.persistence.sqlalchemy.table.device import map_device_table
+from presentation.web.controllers.device_property import DEVICE_PROPERTY_CONTROLLER
 
 app = Flask(__name__)
 
@@ -25,7 +26,8 @@ setup_dishka(container, app)
 from presentation.web.controllers.device import DEVICE_CONTROLLER
 
 # Controllers
-app.register_blueprint(DEVICE_CONTROLLER, url_prefix="/api")
+app.register_blueprint(DEVICE_CONTROLLER, url_prefix="/api/device")
+app.register_blueprint(DEVICE_PROPERTY_CONTROLLER, url_prefix="/api/device-property")
 
 if __name__ == "__main__":
     map_device_table()

@@ -1,16 +1,16 @@
 from dataclasses import dataclass
-from typing import Any
 
 
 @dataclass(frozen=True, slots=True)
-class Status:
+class Property:
     code: str
-    value: Any
+    values: dict
+    type: str
+    name: str
+    desc: str
+
 
 @dataclass(frozen=True, slots=True)
-class DeviceDto:
+class DevicePropertyDto:
     device_id: str
-    name: str
-    model: str
-    online: bool
-    status: list[Status]
+    properties: list[Property]
