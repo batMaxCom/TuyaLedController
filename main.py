@@ -3,6 +3,7 @@ from dishka.integrations.flask import setup_dishka
 from flask import Flask
 
 from infrastructure.di.db import DatabaseProvider, SessionProvider
+from infrastructure.di.gateway import GatewayProvider
 from infrastructure.di.handlers import HandlersProvider
 from infrastructure.di.mediator import MediatorProvider
 from infrastructure.di.repository import RepositoryProvider
@@ -16,6 +17,7 @@ container = make_container(
     RepositoryProvider(),
     MediatorProvider(),
     HandlersProvider(),
+    GatewayProvider()
 )
 
 setup_dishka(container, app)

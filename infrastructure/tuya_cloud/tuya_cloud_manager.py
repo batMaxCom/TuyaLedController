@@ -66,10 +66,15 @@ class TuyaCloudManager:
 
     def get_status(self):
         return self._parse_device_status(
-            self.openapi.get(TuyaCloudUriEnum.get_info.value.format(self.device_id))
+            self.openapi.get(TuyaCloudUriEnum.get_info.value.format(device_id=self.device_id))
         )
+
+    def get_device_info(self, device_id: str):
+        response = self.openapi.get(TuyaCloudUriEnum.get_info.value.format(device_id=device_id))
+        return response
+
 tuya_settings = TuyaCloudConfig.from_env()
-controller = TuyaCloudManager(
+tuya_cloud_manager = TuyaCloudManager(
     access_id=tuya_settings.access_id,
     access_key=tuya_settings.access_key,
     device_id=os.getenv("DEVICE_ID"),

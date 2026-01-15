@@ -14,10 +14,10 @@ class AddDeviceCommand(Command):
 class AddDeviceCommandHandler(CommandHandler):
     def __init__(
             self,
-            repository: DeviceRepository,
+            device_repository: DeviceRepository,
 
     ) -> None:
-        self.__repository = repository
+        self.__device_repository = device_repository
 
     def handle(self, command: AddDeviceCommand):
-        self.__repository.add_device(Device(command.device_id))
+        self.__device_repository.add_device(Device(command.device_id))

@@ -5,7 +5,9 @@ class Device:
     def __init__(
             self,
             device_id: DeviceId,
-            name: str
     ):
         self._device_id = device_id
-        self._name = name
+
+    @property
+    def device_id(self) -> DeviceId:
+        return self._device_id

@@ -1,11 +1,14 @@
+from dataclasses import asdict
+
 from dishka import FromDishka
 from dishka.integrations.flask import inject
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from http import HTTPStatus as status
 
 from application.common.dto.device import DeviceDto
 from application.operations.command import AddDeviceCommand
 from application.operations.query import GetDeviceQuery
+from domain.device.value_objects.device_id import DeviceId
 from infrastructure.mediatr.mediatr import Mediator
 from presentation.web.param import DeviceBody
 from presentation.web.schemas.base import SuccessfulResponse
@@ -16,19 +19,19 @@ DEVICE_CONTROLLER = Blueprint('device', __name__)
 @inject
 def create_device(
         mediator: FromDishka[Mediator],
-) -> SuccessfulResponse[None]:
+) -> None:
     body = DeviceBody(**request.get_json())
     command = AddDeviceCommand(
-        device_id=body.device_id
+        device_id=DeviceId(body.device_id)
     )
-    result = mediator.send(command)
-    return SuccessfulResponse(status.OK, result)
+    mediator.send(command)
+    return jsonify(None), status.CREATED.value
 
 @DEVICE_CONTROLLER.get('/')
 @inject
 def get_list_device(
         mediator: FromDishka[Mediator],
-) -> SuccessfulResponse[list[DeviceDto]]:
+) -> list[DeviceDto | None]:
     query = GetDeviceQuery()
     result = mediator.send(query)
-    return SuccessfulResponse(status.OK, result)
+    return jsonify(result), status.OK.value
