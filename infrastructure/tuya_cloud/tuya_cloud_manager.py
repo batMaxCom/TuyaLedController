@@ -79,6 +79,12 @@ class TuyaCloudManager:
         )
         return response
 
+    def get_device_state(self, device_id: str):
+        response = self.openapi.get(
+            TuyaCloudUriEnum.get_state.value.format(device_id=device_id)
+        )
+        return response
+
 tuya_settings = TuyaCloudConfig.from_env()
 tuya_cloud_manager = TuyaCloudManager(
     access_id=tuya_settings.access_id,

@@ -1,9 +1,11 @@
 from dishka import Provider, provide, Scope
 
 from application.operations.command import AddDeviceCommandHandler
-from application.operations.query import GetDeviceQueryHandler, GetDevicePropertyQueryHandler
+from application.operations.query import GetDeviceQueryHandler, GetDevicePropertyQueryHandler, \
+    GetDeviceStateQueryHandler
 from application.port.gateway.device_gateway import DeviceGateway
 from application.port.gateway.device_property_gateway import DevicePropertyGateway
+from application.port.gateway.device_state_gateway import DeviceStateGateway
 from domain.device.repository import DeviceRepository
 
 
@@ -38,4 +40,13 @@ class HandlersProvider(Provider):
     ) -> GetDevicePropertyQueryHandler:
         return GetDevicePropertyQueryHandler(
             device_property_gateway=device_property_gateway
+        )
+
+    @provide
+    def get_device_state_query_handler(
+            self,
+            device_state_gateway: DeviceStateGateway,
+    ) -> GetDeviceStateQueryHandler:
+        return GetDeviceStateQueryHandler(
+            device_state_gateway=device_state_gateway
         )

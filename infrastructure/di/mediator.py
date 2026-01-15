@@ -1,7 +1,7 @@
 from dishka import Provider, Scope, provide
 
 from application.operations.query import GetDeviceQuery, GetDeviceQueryHandler, GetDevicePropertyQuery, \
-    GetDevicePropertyQueryHandler
+    GetDevicePropertyQueryHandler, GetDeviceStateQueryHandler, GetDeviceStateQuery
 from application.port.sender import Sender
 from infrastructure.mediatr.interfaces.resolver import Resolver
 from infrastructure.mediatr.mediatr import Mediator
@@ -29,6 +29,10 @@ class MediatorProvider(Provider):
         registry.add_handler(
             GetDevicePropertyQuery,
             GetDevicePropertyQueryHandler,
+        )
+        registry.add_handler(
+            GetDeviceStateQuery,
+            GetDeviceStateQueryHandler,
         )
         return registry
 

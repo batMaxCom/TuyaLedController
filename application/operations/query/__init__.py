@@ -1,7 +1,7 @@
 from application.operations.query.device.get_device import GetDeviceQuery, GetDeviceQueryHandler
 from application.operations.query.device_property.get_device_properties import GetDevicePropertyQuery, \
     GetDevicePropertyQueryHandler
-from application.operations.query.device_state.get_device_state import GetDeviceStateQuery, GetDeviceStateHandler
+from application.operations.query.device_state.get_device_state import GetDeviceStateQuery, GetDeviceStateQueryHandler
 
 __all__ = (
     "GetDeviceQuery",
@@ -9,5 +9,5 @@ __all__ = (
     "GetDevicePropertyQuery",
     "GetDevicePropertyQueryHandler",
     "GetDeviceStateQuery",
-    "GetDeviceStateHandler",
+    "GetDeviceStateQueryHandler",
 )
