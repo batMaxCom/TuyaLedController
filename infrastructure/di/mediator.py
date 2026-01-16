@@ -1,15 +1,11 @@
 from dishka import Provider, Scope, provide
 
-from application.operations.query import GetDeviceQuery, GetDeviceQueryHandler, GetDevicePropertyQuery, \
-    GetDevicePropertyQueryHandler, GetDeviceStateQueryHandler, GetDeviceStateQuery
 from application.port.sender import Sender
+from infrastructure.di.factories.command_factory import register_commands
+from infrastructure.di.factories.query_factory import register_queries
 from infrastructure.mediatr.interfaces.resolver import Resolver
-from infrastructure.mediatr.mediatr import Mediator
+from infrastructure.mediatr.mediatr import MediatorImpl
 from infrastructure.mediatr.registy import Registry
-from application.operations.command import (
-    AddDeviceCommand,
-    AddDeviceCommandHandler,
-)
 from infrastructure.mediatr.resolver import DishkaResolver
 
 class MediatorProvider(Provider):
@@ -18,27 +14,9 @@ class MediatorProvider(Provider):
     @provide(scope=Scope.APP)
     def registry(self) -> Registry:
         registry = Registry()
-        registry.add_handler(
-            AddDeviceCommand,
-            AddDeviceCommandHandler,
-        )
-        registry.add_handler(
-            GetDeviceQuery,
-            GetDeviceQueryHandler,
-        )
-        registry.add_handler(
-            GetDevicePropertyQuery,
-            GetDevicePropertyQueryHandler,
-        )
-        registry.add_handler(
-            GetDeviceStateQuery,
-            GetDeviceStateQueryHandler,
-        )
+        register_commands(registry)
+        register_queries(registry)
         return registry
 
-
-    @provide
-    def mediator(self, registry: Registry, resolver: Resolver) -> Mediator:
-        return Mediator(registry, resolver)
-
+    mediator = provide(MediatorImpl, provides=Sender)
     resolver = provide(DishkaResolver, provides=Resolver)

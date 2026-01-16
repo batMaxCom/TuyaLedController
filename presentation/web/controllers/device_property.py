@@ -7,7 +7,7 @@ from http import HTTPStatus as status
 
 from application.operations.query import  GetDevicePropertyQuery
 from domain.device.value_objects.device_id import DeviceId
-from infrastructure.mediatr.mediatr import Mediator
+from infrastructure.mediatr.mediatr import Sender as Mediator
 
 DEVICE_PROPERTY_CONTROLLER = Blueprint('device_property', __name__)
 

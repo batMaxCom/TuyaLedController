@@ -3,7 +3,7 @@ from infrastructure.mediatr.interfaces.resolver import Resolver
 from infrastructure.mediatr.registy import Registry
 
 
-class Mediator(Sender):
+class MediatorImpl(Sender):
     def __init__(self, registry: Registry, resolver: Resolver) -> None:
         self.__registry = registry
         self.__resolver = resolver

@@ -7,7 +7,7 @@ from infrastructure.di.gateway import GatewayProvider
 from infrastructure.di.handlers import HandlersProvider
 from infrastructure.di.mediator import MediatorProvider
 from infrastructure.di.repository import RepositoryProvider
-from infrastructure.persistence.sqlalchemy.table.device import map_device_table
+from infrastructure.persistence.sqlalchemy.table.setup import setup_mappings
 from presentation.web.controllers.device_property import DEVICE_PROPERTY_CONTROLLER
 from presentation.web.controllers.device_state import DEVICE_STATE_CONTROLLER
 
@@ -33,7 +33,7 @@ app.register_blueprint(DEVICE_STATE_CONTROLLER, url_prefix="/api/device-state")
 
 
 if __name__ == "__main__":
-    map_device_table()
+    setup_mappings()
     app.run(
         host="0.0.0.0",
         port=8000,

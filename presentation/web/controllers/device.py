@@ -7,7 +7,7 @@ from application.common.dto.device import DeviceDto
 from application.operations.command import AddDeviceCommand
 from application.operations.query import GetDeviceQuery
 from domain.device.value_objects.device_id import DeviceId
-from infrastructure.mediatr.mediatr import Mediator
+from infrastructure.mediatr.mediatr import Sender as Mediator
 from presentation.web.param import DeviceBody
 
 DEVICE_CONTROLLER = Blueprint('device', __name__)
